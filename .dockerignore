@@ -1,0 +1,61 @@
+# VCS
+.git
+.gitignore
+.github
+
+# IDE/editor
+.vscode
+.idea
+*.code-workspace
+
+# Python bytecode & caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dylib
+.eggs/
+*.egg-info/
+*.egg
+.cache/
+.mypy_cache/
+.ruff_cache/
+
+# Builds / dists
+build/
+dist/
+downloads/
+wheels/
+htmlcov/
+.pytest_cache/
+
+# Env & local config
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Logs
+logs/
+*.log
+*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compose & CI
+docker-compose*.yml
+.gitlab-ci.yml
+
+tests/
+docs/
+
+# Tmp
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo

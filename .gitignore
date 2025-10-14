@@ -1,0 +1,74 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dylib
+.Python
+
+# Packages / builds
+build/
+dist/
+downloads/
+wheels/
+.eggs/
+*.egg-info/
+*.egg
+sdist/
+var/
+share/python-wheels/
+MANIFEST
+
+# Virtual envs
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Tests / coverage / type-check / lint
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+.mypy_cache/
+.ruff_cache/
+pytestdebug.log
+
+# Logs
+logs/
+*.log
+*.pid
+
+# IDE/editor
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database / state
+*.db
+*.sqlite3
+
+# Tmp
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+
+# Node (if any)
+node_modules/
+
+# Docker / compose (keep Dockerfile tracked)
+docker-compose*.yml
+
+# Secrets (never commit)
+*.secrets.json
