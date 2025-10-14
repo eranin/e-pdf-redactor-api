@@ -1,5 +1,9 @@
-# Eranin PDF Redaction API (Author: hphun9)
 
+<p align="center">
+  <img src="logo.png" alt="Eranin Logo" width="120"/>
+</p>
+
+# Eranin PDF Redaction API (Author: hphun9)
 Fast bounding-box redaction for PDFs (FastAPI + PyMuPDF).
 
 ## Quick Start
