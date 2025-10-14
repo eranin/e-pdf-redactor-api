@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eranin PDF Redaction API</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 0; background: #f6f7f9; color: #222; }
+    .container { max-width: 860px; margin: 40px auto; background: #fff; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.08); overflow: hidden; }
+    header { padding: 28px 28px 0; text-align: center; }
+    h1 { margin: 10px 0 8px; font-size: 28px; }
+    p.lead { margin: 0 0 18px; color: #555; }
+    main { padding: 0 28px 28px; }
+    .card { border: 1px solid #e9eaee; border-radius: 12px; padding: 16px; margin: 14px 0; }
+    .muted { color: #666; font-size: 14px; }
+    a { color: #0b63f6; text-decoration: none; }
+    footer { text-align: center; padding: 14px 18px; background: #fafbfc; border-top: 1px solid #eef0f3; font-size: 14px; color: #6b7280; }
+    code { background: #f0f3f9; padding: 2px 6px; border-radius: 6px; }
+    img.logo { width: 100px; height: auto; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="hihihihi.png" alt="Eranin logo" class="logo"/>
+      <h1>Eranin PDF Redaction API</h1>
+      <p class="lead">Mask or remove sensitive PDF regions by bounding boxes — FastAPI + PyMuPDF</p>
+    </header>
+    <main>
+      <div class="card">
+        <h3>API</h3>
+        <p><code>POST /redact-pdf</code> with a PDF file and <code>request_data</code> (JSON string).</p>
+<pre><code>curl -X POST http://localhost:8000/redact-pdf \
+  -F "pdf_file=@/path/to/input.pdf" \
+  -F 'request_data={{
+    "pages_coordinates": {{
+      "0": [{{"x1":50,"y1":50,"x2":200,"y2":100}}],
+      "1": [{{"x1":100,"y1":120,"x2":240,"y2":180}}]
+    }}
+  }}'</code></pre>
+        <p class="muted">Returns the redacted PDF.</p>
+      </div>
+
+      <div class="card">
+        <h3>Health Check</h3>
+        <p><code>GET /healthz</code> → <code>{"status":"ok"}</code></p>
+      </div>
+
+      <div class="card">
+        <h3>About</h3>
+        <p><strong>Eranin</strong> • Developed by <strong>hphun9</strong> • <a href="https://eranin.com" target="_blank">eranin.com</a></p>
+      </div>
+    </main>
+    <footer>© 2025 Eranin • Maintained by hphun9 • AGPL v3 License</footer>
+  </div>
+</body>
+</html>
