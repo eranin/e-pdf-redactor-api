@@ -1,51 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: eranin-pdf-redaction-api
+  name: eranin-pdf-co
+  namespace: eranin-prod
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: eranin-pdf-redaction-api
+      app: eranin-pdf-co
   template:
     metadata:
       labels:
-        app: eranin-pdf-redaction-api
+        app: eranin-pdf-co
     spec:
       containers:
-        - name: api
-          image: eranin/pdf-redaction-api:latest
+        - name: eranin-pdf-co
+          image: vcr.vngcloud.vn/105586-eranin-prod-02/eranin-pdf-co:latest
           ports:
-            - containerPort: 8000
-          resources:
-            requests:
-              cpu: "200m"
-              memory: "256Mi"
-            limits:
-              cpu: "1"
-              memory: "512Mi"
+            - containerPort: 3000
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 8000
-            initialDelaySeconds: 3
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8000
-            initialDelaySeconds: 10
+              port: 3000
+            initialDelaySeconds: 5
             periodSeconds: 10
+      imagePullSecrets:
+        - name: registry-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: eranin-pdf-redaction-api
+  name: eranin-pdf-co
+  namespace: eranin-prod
 spec:
+  type: NodePort
   selector:
-    app: eranin-pdf-redaction-api
+    app: eranin-pdf-co
   ports:
-    - name: http
-      port: 80
-      targetPort: 8000
-  type: ClusterIP
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30023
