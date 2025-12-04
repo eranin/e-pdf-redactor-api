@@ -1,0 +1,39 @@
+name: Build & Deploy EPDF Redactor
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+
+  # =====================================
+  # EPDF Redactor CI
+  # =====================================
+  build-epdf-redactor:
+    uses: eranin/eranin-ci/.github/workflows/docker_build_push.yml@main
+    with:
+      image_name: "epdf-redactor"
+      context: "./"
+      dockerfile: "./Dockerfile"
+    secrets:
+      REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+  
+  # =====================================
+  # EPDF Redactor CD
+  # =====================================
+  deploy-epdf-redactor:
+    needs: build-epdf-redactor
+    uses: eranin/eranin-cd/.github/workflows/helm_deploy.yml@main
+    with:
+      app_name: "epdf-redactor"
+      values_path: "apps/asmara/asmara-anf/epdf-redactor/values.prod.yaml"
+      image_name: "epdf-redactor"
+      image_tag: ${{ needs.build-epdf-redactor.outputs.image_tag }}
+    secrets:
+      INFRA_REPO_TOKEN: ${{ secrets.INFRA_REPO_TOKEN }}
+      IMAGE_REGISTRY: ${{ secrets.REGISTRY_URL }}
+
