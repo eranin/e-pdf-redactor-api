@@ -14,6 +14,6 @@ class RedactRule(BaseModel):
     area: RedactArea
 
 
-class RedactRequest(BaseModel):
+class RedactPdfRequest(BaseModel):
     source_uri: str
     rules: List[RedactRule]
