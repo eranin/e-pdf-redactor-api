@@ -1,80 +1,41 @@
-# PDF Redact Service
 
-A production-ready PDF redaction service built with **FastAPI + PyMuPDF**, supporting
-multiple storage backends (**Local / MinIO / AWS S3**) via environment configuration.
+<p align="center">
+  <img src="logo.png" alt="Eranin Logo" width="120"/>
+</p>
 
----
+# Eranin PDF Redaction API (Author: hphun9)
+Fast bounding-box redaction for PDFs (FastAPI + PyMuPDF).
 
-## Features
-
-- Redact PDF by **page + bounding box (x, y, width, height)**
-- Input file via **URI** (local://, minio://, s3://)
-- Redacted file is uploaded back to the same storage & path
-- Storage backend selected via environment variables
-- Clean architecture, easy to extend
-
----
-
-## Run with Docker
-
-### Build image
+## Quick Start
 
 ```bash
-docker build -t pdf-redact-service .
+# Create Venv
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+uvicorn index:app --reload --port 3000
+
 ```
 
-### Run container (local storage)
+### Request Example
 
 ```bash
-docker run -d \
-  -p 3000:3000 \
-  -e STORAGE_DRIVER=local \
-  -e LOCAL_STORAGE_PATH=/data \
-  -v /tmp/pdf-storage:/data \
-  --name pdf-redact \
-  pdf-redact-service
-```
-
----
-
-## API
-
-### POST /redact
-
-```json
-{
-  "source_uri": "local://docs/sample.pdf",
-  "rules": [
-    {
-      "page": 0,
-      "area": {
-        "x": 100,
-        "y": 150,
-        "width": 200,
-        "height": 40
-      }
+curl -X POST http://localhost:8000/redact-pdf \
+  -F "pdf_file=@/path/to/input.pdf" \
+  -F 'request_data={
+    "pages_coordinates": {
+      "0": [{"x1": 50, "y1": 50, "x2": 200, "y2": 100}],
+      "1": [{"x1": 100, "y1": 120, "x2": 240, "y2": 180}]
     }
-  ]
-}
+  }'
 ```
 
-### Response
+## License (AGPL v3)
 
-```json
-{
-  "status": "success",
-  "redacted_uri": "local://docs/sample.pdf"
-}
-```
+This repository is distributed under the **GNU Affero General Public License v3**.
 
----
+- Copyright (C) 2025  Original author(s)
+- Modifications Copyright (C) 2025  hphun9 (Eranin)
 
-## Notes
-
-- PDF coordinate system is used
-- Redaction is applied **in-place**
-- Buckets / folders must exist before use
-
----
-
-Internal usage – free to adapt.
+Per AGPL requirements, source changes must be shared under the same license.

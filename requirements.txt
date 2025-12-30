@@ -2,5 +2,4 @@ fastapi
 uvicorn
 pymupdf
 pydantic
-minio
-boto3
+python-multipart
