@@ -6,7 +6,8 @@ from typing import Dict, List, Optional, Union
 import fitz
 import io
 import json
-from datetime import datetime
+import re
+from datetime import datetime, timedelta
 
 app = FastAPI(
     title="My Application",
@@ -330,23 +331,23 @@ def process_pdf_advanced_template(pdf_buffer: bytes, rules: List[Rule]) -> bytes
                 for w in words:
                     wx1, wy1, wx2, wy2 = w[:4]
                     wtext = w[4]
-                    
+
                     if wx2 < bound_x1 or wx1 > bound_x2 or wy2 < bound_y1 or wy1 > bound_y2:
                         continue
-                    
+
                     m = date_re.search(wtext)
                     if not m:
                         continue
-                    
+
                     orig_date = m.group(0)
-                    
+
                     if not date_re.fullmatch(wtext.strip()):
                         if len(orig_date) < 8:
                             continue
                     
                     parsed = None
                     output_fmt = None
-                    
+
                     date_formats = [
                         ("%m/%d/%Y", "%m/%d/%Y"),
                         ("%m/%d/%y", "%m/%d/%y"),
@@ -354,7 +355,7 @@ def process_pdf_advanced_template(pdf_buffer: bytes, rules: List[Rule]) -> bytes
                         ("%d/%m/%Y", "%d/%m/%Y"),
                         ("%d/%m/%y", "%d/%m/%y"),
                     ]
-                    
+
                     for input_fmt, out_fmt in date_formats:
                         try:
                             parsed = datetime.strptime(orig_date, input_fmt)
@@ -362,7 +363,7 @@ def process_pdf_advanced_template(pdf_buffer: bytes, rules: List[Rule]) -> bytes
                             break
                         except Exception:
                             continue
-                    
+
                     if not parsed:
                         continue
 
@@ -433,9 +434,9 @@ def process_pdf_advanced_template(pdf_buffer: bytes, rules: List[Rule]) -> bytes
                         annot = page.add_redact_annot(rect)
                         annot.set_colors(fill=(1, 1, 1))
                         annot.update()
-                    
+
                     page.apply_redactions()
-                    
+
                     # Insert
                     for rect, new_text, orig_text, font_info, (ox1, oy1, ox2, oy2) in replacements:
                         try:
