@@ -16,7 +16,7 @@ COPY . /app/
 # Mở cổng mà FastAPI sẽ chạy
 EXPOSE 3000
 
-# Chạy ứng dụng FastAPI khi container bắt đầu
-CMD ["uvicorn", "index:app", "--host", "0.0.0.0", "--port", "3000"]
+# Chạy ứng dụng FastAPI khi container bắt đầu (tăng workers để xử lý song song nhiều file hơn)
+CMD ["uvicorn", "index:app", "--host", "0.0.0.0", "--port", "3000", "--workers", "4"]
 
-#uvicorn index:app --host 0.0.0.0 --port 3000
+#uvicorn index:app --host 0.0.0.0 --port 3000 --workers 4
